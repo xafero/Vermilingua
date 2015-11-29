@@ -1,9 +1,9 @@
 package com.xafero.vermilingua.api;
 
-import java.io.File;
+import java.io.InputStream;
 
 public interface IParser {
 
-	void parse(File file);
+	String parse(String name, InputStream input);
 
 }

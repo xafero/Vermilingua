@@ -20,6 +20,7 @@ public class Program {
 	private static final String S_BY_NAME = "k";
 	private static final String S_BY_CLASS = "l";
 	private static final String S_BY_MANIFEST = "m";
+	private static final String S_BY_TEXT = "n";
 
 	public static void main(String[] args) throws Exception {
 		// Define options
@@ -31,6 +32,7 @@ public class Program {
 				.build();
 		Option byManifest = Option.builder(S_BY_MANIFEST).desc("... by manifest").argName("term").longOpt("manifest")
 				.hasArg().build();
+		Option byText = Option.builder(S_BY_TEXT).desc("... by text").argName("term").longOpt("text").hasArg().build();
 		// Collect them
 		Options options = new Options();
 		options.addOption(help);
@@ -39,6 +41,7 @@ public class Program {
 		options.addOption(byName);
 		options.addOption(byClass);
 		options.addOption(byManifest);
+		options.addOption(byText);
 		// If nothing given, nothing will happen
 		if (args == null || args.length < 1) {
 			printHelp(options);
@@ -52,7 +55,6 @@ public class Program {
 			process(line, options);
 		} catch (Throwable e) {
 			System.err.printf("Error occurred: %n " + e.getMessage());
-			e.printStackTrace();
 		}
 	}
 
@@ -73,7 +75,8 @@ public class Program {
 			String name = line.getOptionValue(S_BY_NAME);
 			String clazz = line.getOptionValue(S_BY_CLASS);
 			String manifest = line.getOptionValue(S_BY_MANIFEST);
-			Search.findJARs(dir, name, clazz, manifest);
+			String text = line.getOptionValue(S_BY_TEXT);
+			Search.findJARs(dir, name, clazz, manifest, text);
 			return;
 		}
 	}
