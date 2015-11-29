@@ -53,6 +53,8 @@ public class XmlParser extends AbstractParser implements IParser {
 				if (!txt.isEmpty() && MyUtils.contains(txt, text))
 					array.add(txt);
 				break;
+			case XMLStreamConstants.PROCESSING_INSTRUCTION:
+				break;
 			case XMLStreamConstants.END_ELEMENT:
 				break;
 			case XMLStreamConstants.END_DOCUMENT:
