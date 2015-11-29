@@ -16,18 +16,29 @@ public class Program {
 
 	private static final String S_HELP = "?";
 	private static final String S_ROOT = "r";
-	private static final String S_JARS = "j";
+	private static final String S_JARS = "f";
+	private static final String S_BY_NAME = "k";
+	private static final String S_BY_CLASS = "l";
+	private static final String S_BY_MANIFEST = "m";
 
 	public static void main(String[] args) throws Exception {
 		// Define options
 		Option help = new Option(S_HELP, "help", false, "print this message");
 		Option root = Option.builder(S_ROOT).desc("specify root").argName("dir").longOpt("root").hasArg().build();
-		Option jars = Option.builder(S_JARS).desc("find JARs by name").argName("term").longOpt("jars").hasArg().build();
+		Option jars = Option.builder(S_JARS).desc("find JARs ...").longOpt("jars").build();
+		Option byName = Option.builder(S_BY_NAME).desc("... by name").argName("term").longOpt("name").hasArg().build();
+		Option byClass = Option.builder(S_BY_CLASS).desc("... by class").argName("term").longOpt("class").hasArg()
+				.build();
+		Option byManifest = Option.builder(S_BY_MANIFEST).desc("... by manifest").argName("term").longOpt("manifest")
+				.hasArg().build();
 		// Collect them
 		Options options = new Options();
 		options.addOption(help);
 		options.addOption(root);
 		options.addOption(jars);
+		options.addOption(byName);
+		options.addOption(byClass);
+		options.addOption(byManifest);
 		// If nothing given, nothing will happen
 		if (args == null || args.length < 1) {
 			printHelp(options);
@@ -59,8 +70,10 @@ public class Program {
 		}
 		if (line.hasOption(S_JARS)) {
 			String dir = line.getOptionValue(S_ROOT);
-			String term = line.getOptionValue(S_JARS);
-			Search.findJARs(dir, term);
+			String name = line.getOptionValue(S_BY_NAME);
+			String clazz = line.getOptionValue(S_BY_CLASS);
+			String manifest = line.getOptionValue(S_BY_MANIFEST);
+			Search.findJARs(dir, name, clazz, manifest);
 			return;
 		}
 	}
